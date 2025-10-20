@@ -19,7 +19,8 @@ const getMarkerIcon = (color: string) => {
     strokeColor: '#ffffff',
     rotation: 0,
     scale: 1.5,
-    anchor: new google.maps.Point(12, 24),
+    // Fix: Cannot use namespace 'google' as a value. The Google Maps API is available on the window object.
+    anchor: new window.google.maps.Point(12, 24),
   };
 };
 
@@ -32,8 +33,8 @@ const VehicleMapWidget: React.FC<{ vehicles: Vehicle[] }> = ({ vehicles }) => {
 
   useEffect(() => {
     if (isLoaded && mapRef.current && !map) {
-      // Fix: Use the globally declared 'google' variable instead of 'window.google' for consistency and to resolve type errors.
-      const newMap = new google.maps.Map(mapRef.current, {
+      // Fix: Cannot use namespace 'google' as a value. The Google Maps API is available on the window object.
+      const newMap = new window.google.maps.Map(mapRef.current, {
         center: { lat: 45.4215, lng: -75.6972 },
         zoom: 10,
         mapId: 'FLEET_MAP_ID',
@@ -43,13 +44,15 @@ const VehicleMapWidget: React.FC<{ vehicles: Vehicle[] }> = ({ vehicles }) => {
         streetViewControl: false,
       });
       setMap(newMap);
-      infoWindowRef.current = new google.maps.InfoWindow();
+      // Fix: Cannot use namespace 'google' as a value. The Google Maps API is available on the window object.
+      infoWindowRef.current = new window.google.maps.InfoWindow();
     }
   }, [isLoaded, mapRef, map]);
 
   useEffect(() => {
     if (map && vehicles.length > 0) {
-      const bounds = new google.maps.LatLngBounds();
+      // Fix: Cannot use namespace 'google' as a value. The Google Maps API is available on the window object.
+      const bounds = new window.google.maps.LatLngBounds();
       const currentMarkers = markersRef.current;
       const vehicleIds = new Set(vehicles.map(v => v.id));
 
@@ -62,7 +65,8 @@ const VehicleMapWidget: React.FC<{ vehicles: Vehicle[] }> = ({ vehicles }) => {
           marker.setPosition(position);
           marker.setIcon(getMarkerIcon(statusColors[vehicle.status]));
         } else {
-          const newMarker = new google.maps.Marker({
+          // Fix: Cannot use namespace 'google' as a value. The Google Maps API is available on the window object.
+          const newMarker = new window.google.maps.Marker({
             position,
             map,
             icon: getMarkerIcon(statusColors[vehicle.status]),
