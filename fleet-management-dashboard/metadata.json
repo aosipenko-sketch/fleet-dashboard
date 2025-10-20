@@ -1,0 +1,5 @@
+{
+  "name": "Fleet Management Dashboard",
+  "description": "An editable dashboard overview for fleet management, integrating mock data from various sources like Google Sheets, Fleetio, and Geotab. Users can select a company and customize their dashboard view with widgets for vehicles, drivers, maintenance, and a live map.",
+  "requestFramePermissions": []
+}
