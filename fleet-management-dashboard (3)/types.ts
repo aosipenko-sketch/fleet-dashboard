@@ -1,5 +1,5 @@
 // Fix: Add type definition for import.meta.env to support Vite environment variables.
-// This replaces the original `/// <reference types="vite/client" />` which was causing a "Cannot find type definition file" error.
+// This resolves "Property 'env' does not exist on type 'ImportMeta'" errors.
 interface ImportMeta {
   readonly env: {
     readonly VITE_GOOGLE_MAPS_API_KEY: string;
@@ -13,7 +13,7 @@ interface ImportMeta {
 }
 
 // Fix: Declare google.maps namespace to provide type information for the Google Maps API.
-// This resolves both "Cannot find name 'google'" and "Cannot find namespace 'google'" errors throughout the application.
+// This resolves "Cannot find name 'google'" and "Cannot find namespace 'google'" errors.
 declare namespace google {
   namespace maps {
     type Map = any;
