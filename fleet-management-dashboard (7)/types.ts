@@ -22,6 +22,11 @@ declare global {
       type Point = any;
     }
   }
+
+  // Fix: Extend the Window interface to include the google object for TypeScript.
+  interface Window {
+    google: typeof google;
+  }
 }
 
 // Fix: Moved Company enum here to break circular dependency with constants.tsx
