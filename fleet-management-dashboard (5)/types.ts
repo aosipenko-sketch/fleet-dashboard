@@ -1,26 +1,26 @@
-// Fix: Add type definition for import.meta.env to support Vite environment variables.
-// This resolves "Property 'env' does not exist on type 'ImportMeta'" errors.
-interface ImportMeta {
-  readonly env: {
-    readonly VITE_GOOGLE_MAPS_API_KEY: string;
-    readonly VITE_FLEETIO_API_KEY: string;
-    readonly VITE_FLEETIO_ACCOUNT_TOKEN: string;
-    readonly VITE_GEOTAB_USER: string;
-    readonly VITE_GEOTAB_PASSWORD: string;
-    readonly VITE_GEOTAB_DATABASE: string;
-    [key: string]: any;
-  };
-}
+// Fix: Wrap global type definitions in `declare global` because this file is a module.
+// This resolves errors about `import.meta.env` and the `google` namespace not being found.
+declare global {
+  interface ImportMeta {
+    readonly env: {
+      readonly VITE_GOOGLE_MAPS_API_KEY: string;
+      readonly VITE_FLEETIO_API_KEY: string;
+      readonly VITE_FLEETIO_ACCOUNT_TOKEN: string;
+      readonly VITE_GEOTAB_USER: string;
+      readonly VITE_GEOTAB_PASSWORD: string;
+      readonly VITE_GEOTAB_DATABASE: string;
+      [key: string]: any;
+    };
+  }
 
-// Fix: Declare google.maps namespace to provide type information for the Google Maps API.
-// This resolves "Cannot find name 'google'" and "Cannot find namespace 'google'" errors.
-declare namespace google {
-  namespace maps {
-    type Map = any;
-    type Marker = any;
-    type InfoWindow = any;
-    type LatLngBounds = any;
-    type Point = any;
+  namespace google {
+    namespace maps {
+      type Map = any;
+      type Marker = any;
+      type InfoWindow = any;
+      type LatLngBounds = any;
+      type Point = any;
+    }
   }
 }
 
