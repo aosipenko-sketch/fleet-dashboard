@@ -1,8 +1,28 @@
-// Fix: Add Vite client types reference to fix import.meta.env errors.
-/// <reference types="vite/client" />
+// Fix: Add type definition for import.meta.env to support Vite environment variables.
+// This replaces the original `/// <reference types="vite/client" />` which was causing a "Cannot find type definition file" error.
+interface ImportMeta {
+  readonly env: {
+    readonly VITE_GOOGLE_MAPS_API_KEY: string;
+    readonly VITE_FLEETIO_API_KEY: string;
+    readonly VITE_FLEETIO_ACCOUNT_TOKEN: string;
+    readonly VITE_GEOTAB_USER: string;
+    readonly VITE_GEOTAB_PASSWORD: string;
+    readonly VITE_GEOTAB_DATABASE: string;
+    [key: string]: any;
+  };
+}
 
-// Fix: Declare google as a global variable to be used by Google Maps components.
-declare var google: any;
+// Fix: Declare google.maps namespace to provide type information for the Google Maps API.
+// This resolves both "Cannot find name 'google'" and "Cannot find namespace 'google'" errors throughout the application.
+declare namespace google {
+  namespace maps {
+    type Map = any;
+    type Marker = any;
+    type InfoWindow = any;
+    type LatLngBounds = any;
+    type Point = any;
+  }
+}
 
 // Fix: Moved Company enum here to break circular dependency with constants.tsx
 export enum Company {
